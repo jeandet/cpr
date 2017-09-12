@@ -4,6 +4,7 @@ project('libcpr', 'cpp',default_options : ['cpp_std=c++14'])
 inc = include_directories('include')
 
 libcurl = dependency('libcurl')
+thread_dep = dependency('threads')
 
 cpr_sources = [
   'cpr/auth.cpp',
@@ -28,9 +29,8 @@ cpr_lib = library('cpr',
                        install : true
                        )
 
-
 cpr = declare_dependency(link_with : cpr_lib,
-                                dependencies : libcurl,
+                                dependencies : [libcurl, thread_dep],
                                 include_directories : inc)
 
 gtest_dep = dependency('gtest', required : true, main : false, fallback:['gtest','gtest_mainless_dep'])
